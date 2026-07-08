@@ -161,11 +161,6 @@ input{
   display:none !important;
 }
 
-
-/* =========================
-   登録・ログイン
-========================= */
-
 .auth-switch{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -241,18 +236,12 @@ input{
   position:absolute;
   left:50%;
   top:50%;
-
   color:#fff;
-
   font-weight:800;
   font-size:18px;
   line-height:1;
-
   white-space:nowrap;
-
-  text-shadow:
-    0 2px 4px #000a;
-
+  text-shadow:0 2px 4px #000a;
   transform-origin:center;
 }
 
@@ -298,40 +287,24 @@ input{
 
 .wheel-ball{
   position:absolute;
-
   left:50%;
   top:50%;
-
-  transform:
-    translate(-50%,-50%);
-
+  transform:translate(-50%,-50%);
   width:26%;
   height:26%;
-
   object-fit:contain;
-
   background:#fff;
-
   border-radius:50%;
-
   padding:4px;
-
   z-index:3;
 }
 
 .pointer{
   font-size:38px;
   color:var(--red);
-
   margin-bottom:-13px;
-
   z-index:4;
 }
-
-
-/* =========================
-   結果
-========================= */
 
 .result{
   text-align:center;
@@ -348,11 +321,6 @@ input{
   color:var(--red);
   margin-top:8px;
 }
-
-
-/* =========================
-   テーブル
-========================= */
 
 .table-wrap{
   overflow-x:auto;
@@ -374,11 +342,6 @@ th{
   background:#f5f7fa;
 }
 
-
-/* =========================
-   順位
-========================= */
-
 .rank{
   font-size:19px;
   font-weight:900;
@@ -397,21 +360,11 @@ th{
   color:#b87333;
 }
 
-
-/* =========================
-   管理者
-========================= */
-
 .admin-area{
   margin-top:40px;
   border-top:1px solid var(--line);
   padding-top:20px;
 }
-
-
-/* =========================
-   スマホ
-========================= */
 
 @media(max-width:600px){
 
@@ -484,9 +437,7 @@ th{
 </style>
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -531,9 +482,7 @@ data-page="profile"
 <main>
 
 
-<!-- =========================
-     入場
-========================= -->
+<!-- 入場 -->
 
 <section
 id="gate"
@@ -574,9 +523,7 @@ class="warn"
 
 
 
-<!-- =========================
-     登録・ログイン
-========================= -->
+<!-- 登録・ログイン -->
 
 <section
 id="auth"
@@ -614,7 +561,7 @@ class="auth-box active"
 >
 
 <p class="small">
-ランキングに表示する名前と、自分専用の4桁PINを登録してください。
+ランキングに表示する名前と、自分専用の4桁パスワードを登録してください。
 </p>
 
 <input
@@ -629,7 +576,7 @@ id="registerPin"
 type="password"
 inputmode="numeric"
 maxlength="4"
-placeholder="4桁PIN"
+placeholder="4桁パスワード"
 >
 
 <button
@@ -653,7 +600,7 @@ class="auth-box"
 >
 
 <p class="small">
-別のブラウザや端末でも、登録した名前と4桁PINで同じデータに戻れます。
+別のブラウザや端末でも、登録した名前と4桁パスワードで同じデータに戻れます。
 </p>
 
 <input
@@ -668,7 +615,7 @@ id="loginPin"
 type="password"
 inputmode="numeric"
 maxlength="4"
-placeholder="4桁PIN"
+placeholder="4桁パスワード"
 >
 
 <button
@@ -685,22 +632,18 @@ class="warn"
 
 </div>
 
-
 </div>
 
 </section>
 
 
 
-<!-- =========================
-     打席
-========================= -->
+<!-- 打席 -->
 
 <section
 id="play"
 class="page"
 >
-
 
 <div class="card center">
 
@@ -769,7 +712,6 @@ style="margin-top:20px"
 ルーレットを回す
 </button>
 
-
 </div>
 
 
@@ -795,14 +737,11 @@ class="score"
 
 </div>
 
-
 </section>
 
 
 
-<!-- =========================
-     ランキング
-========================= -->
+<!-- ランキング -->
 
 <section
 id="ranking"
@@ -822,19 +761,9 @@ class="page"
 <thead>
 
 <tr>
-
-<th>
-順位
-</th>
-
-<th>
-名前
-</th>
-
-<th>
-得点
-</th>
-
+<th>順位</th>
+<th>名前</th>
+<th>得点</th>
 </tr>
 
 </thead>
@@ -851,9 +780,7 @@ class="page"
 
 
 
-<!-- =========================
-     ユーザー
-========================= -->
+<!-- ユーザー -->
 
 <section
 id="profile"
@@ -943,29 +870,18 @@ class="btn danger"
 
 </div>
 
-
 </div>
 
 </section>
-
 
 </main>
 
 
 <script>
 
-
-/* =========================
-   API
-========================= */
-
 const API_URL=
 'https://nijigaku-baseball-free-api.s-h-k-p-h-990.workers.dev';
 
-
-/* =========================
-   ユーザー
-========================= */
 
 let token=
 localStorage.getItem(
@@ -977,125 +893,56 @@ let gateToken='';
 let me=null;
 
 
-/* =========================
-   DOM
-========================= */
-
 const $=
 id=>document.getElementById(id);
 
 
-const nav=
-$('nav');
+const nav=$('nav');
 
+const gatePassword=$('gatePassword');
+const enterGate=$('enterGate');
+const gateError=$('gateError');
 
-const gatePassword=
-$('gatePassword');
+const showRegister=$('showRegister');
+const showLogin=$('showLogin');
 
-const enterGate=
-$('enterGate');
+const registerBox=$('registerBox');
+const loginBox=$('loginBox');
 
-const gateError=
-$('gateError');
+const registerName=$('registerName');
+const registerPin=$('registerPin');
+const registerButton=$('registerButton');
+const registerError=$('registerError');
 
+const loginName=$('loginName');
+const loginPin=$('loginPin');
+const loginButton=$('loginButton');
+const loginError=$('loginError');
 
-const showRegister=
-$('showRegister');
+const welcomeName=$('welcomeName');
+const playStatus=$('playStatus');
 
-const showLogin=
-$('showLogin');
+const wheel=$('wheel');
+const spin=$('spin');
 
-const registerBox=
-$('registerBox');
+const resultCard=$('resultCard');
+const resultName=$('resultName');
+const resultScore=$('resultScore');
+const totalScore=$('totalScore');
 
-const loginBox=
-$('loginBox');
+const rankingRows=$('rankingRows');
 
+const profileName=$('profileName');
+const profileScore=$('profileScore');
+const profilePlays=$('profilePlays');
+const profileHomeRuns=$('profileHomeRuns');
 
-const registerName=
-$('registerName');
+const newName=$('newName');
+const changeName=$('changeName');
 
-const registerPin=
-$('registerPin');
+const adminPassword=$('adminPassword');
+const resetAll=$('resetAll');
 
-const registerButton=
-$('registerButton');
-
-const registerError=
-$('registerError');
-
-
-const loginName=
-$('loginName');
-
-const loginPin=
-$('loginPin');
-
-const loginButton=
-$('loginButton');
-
-const loginError=
-$('loginError');
-
-
-const welcomeName=
-$('welcomeName');
-
-const playStatus=
-$('playStatus');
-
-const wheel=
-$('wheel');
-
-const spin=
-$('spin');
-
-const resultCard=
-$('resultCard');
-
-const resultName=
-$('resultName');
-
-const resultScore=
-$('resultScore');
-
-const totalScore=
-$('totalScore');
-
-
-const rankingRows=
-$('rankingRows');
-
-
-const profileName=
-$('profileName');
-
-const profileScore=
-$('profileScore');
-
-const profilePlays=
-$('profilePlays');
-
-const profileHomeRuns=
-$('profileHomeRuns');
-
-
-const newName=
-$('newName');
-
-const changeName=
-$('changeName');
-
-const adminPassword=
-$('adminPassword');
-
-const resetAll=
-$('resetAll');
-
-
-/* =========================
-   API通信
-========================= */
 
 async function api(
   path,
@@ -1164,10 +1011,6 @@ async function api(
 }
 
 
-/* =========================
-   ページ
-========================= */
-
 function showPage(id){
 
   document
@@ -1231,10 +1074,6 @@ document
 });
 
 
-/* =========================
-   登録画面切り替え
-========================= */
-
 function switchAuth(mode){
 
   const register=
@@ -1282,10 +1121,6 @@ showRegister.onclick=
 showLogin.onclick=
 ()=>switchAuth('login');
 
-
-/* =========================
-   入場
-========================= */
 
 enterGate.onclick=
 async()=>{
@@ -1355,10 +1190,6 @@ async()=>{
 };
 
 
-/* =========================
-   新規登録
-========================= */
-
 registerButton.onclick=
 async()=>{
 
@@ -1388,7 +1219,7 @@ async()=>{
   ){
 
     registerError.textContent=
-    'PINは数字4桁で入力してください';
+    'パスワードは数字4桁で入力してください';
 
     return;
 
@@ -1457,10 +1288,6 @@ async()=>{
 };
 
 
-/* =========================
-   ログイン
-========================= */
-
 loginButton.onclick=
 async()=>{
 
@@ -1481,7 +1308,7 @@ async()=>{
   ){
 
     loginError.textContent=
-    '名前と4桁PINを入力してください';
+    '名前と数字4桁のパスワードを入力してください';
 
     return;
 
@@ -1547,10 +1374,6 @@ async()=>{
 };
 
 
-/* =========================
-   ログイン完了
-========================= */
-
 function finishLogin(data){
 
   token=
@@ -1582,10 +1405,6 @@ function finishLogin(data){
 
 }
 
-
-/* =========================
-   自分を取得
-========================= */
 
 async function loadMe(){
 
@@ -1649,10 +1468,6 @@ async function loadMe(){
 
 }
 
-
-/* =========================
-   自分を描画
-========================= */
 
 function renderMe(){
 
@@ -1725,10 +1540,6 @@ function renderMe(){
 
 }
 
-
-/* =========================
-   ルーレット
-========================= */
 
 const outcomes=[
 
@@ -1961,10 +1772,6 @@ async()=>{
 };
 
 
-/* =========================
-   ランキング
-========================= */
-
 function rankClass(index){
 
   if(index===0){
@@ -2093,10 +1900,6 @@ async function loadRanking(){
 }
 
 
-/* =========================
-   名前変更
-========================= */
-
 changeName.onclick=
 async()=>{
 
@@ -2167,10 +1970,6 @@ async()=>{
 
 };
 
-
-/* =========================
-   管理者リセット
-========================= */
 
 resetAll.onclick=
 async()=>{
@@ -2299,12 +2098,7 @@ async()=>{
 };
 
 
-/* =========================
-   初期化
-========================= */
-
 loadMe();
-
 
 </script>
 
