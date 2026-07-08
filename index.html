@@ -12,11 +12,11 @@
   --bg:#f4f6f8;
   --text:#15202b;
   --sub:#687482;
+  --red:#c0392b;
+  --green:#237a3b;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -45,9 +45,7 @@ header img{
   object-fit:contain;
 }
 
-header b{
-  font-size:25px;
-}
+header b{font-size:25px}
 
 main{
   max-width:760px;
@@ -64,17 +62,9 @@ main{
   box-shadow:0 2px 8px #00000008;
 }
 
-h1,h2{
-  margin-top:0;
-}
-
-h1{
-  font-size:32px;
-}
-
-h2{
-  font-size:25px;
-}
+h1,h2{margin-top:0}
+h1{font-size:32px}
+h2{font-size:25px}
 
 p{
   color:var(--sub);
@@ -108,19 +98,21 @@ button.secondary{
   color:var(--text);
 }
 
+button.danger{
+  background:#b83232;
+}
+
 button:disabled{
   opacity:.5;
   cursor:not-allowed;
 }
 
+.hidden{display:none!important}
+
 .message{
   margin-top:14px;
   font-weight:700;
-  color:#c0392b;
-}
-
-.hidden{
-  display:none !important;
+  color:var(--red);
 }
 
 .nav{
@@ -135,16 +127,23 @@ button:disabled{
   font-size:15px;
 }
 
-.status{
-  text-align:center;
-}
+.status{text-align:center}
 
 .ball{
-  width:150px;
-  height:150px;
+  width:160px;
+  height:160px;
   object-fit:contain;
   margin:10px auto 20px;
   display:block;
+}
+
+.ball.spinning{
+  animation:spin .35s linear infinite;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
 }
 
 .name{
@@ -159,14 +158,24 @@ button:disabled{
   margin:10px 0;
 }
 
+.roulette{
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:38px;
+  font-weight:900;
+  margin:20px 0 8px;
+}
+
 .result{
-  font-size:36px;
+  font-size:42px;
   font-weight:900;
   margin:24px 0 8px;
 }
 
 .points{
-  font-size:22px;
+  font-size:24px;
   font-weight:800;
   color:var(--navy);
 }
@@ -182,61 +191,62 @@ th,td{
   text-align:left;
 }
 
-th{
-  color:var(--sub);
-}
+th{color:var(--sub)}
 
 .rank{
   font-size:20px;
   font-weight:900;
 }
 
-.rank1{
-  color:#d4af37;
+.rank1{color:#d4af37}
+.rank2{color:#aeb4bd}
+.rank3{color:#b87333}
+
+.admin-link{
+  margin-top:45px;
+  text-align:center;
+  font-size:12px;
+  color:#9aa3ad;
+  cursor:pointer;
+  text-decoration:underline;
 }
 
-.rank2{
-  color:#aeb4bd;
+.admin-box{
+  margin-top:20px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
 }
 
-.rank3{
-  color:#b87333;
-}
-
-.note{
-  font-size:13px;
+.warning{
+  color:var(--red);
+  font-weight:800;
 }
 
 @media(max-width:600px){
-  header{
-    padding:22px 18px;
-  }
+  header{padding:22px 18px}
 
   header img{
     width:48px;
     height:48px;
   }
 
-  header b{
-    font-size:21px;
-  }
+  header b{font-size:21px}
 
   main{
     padding:22px 14px 50px;
   }
 
-  .card{
-    padding:24px 20px;
-  }
+  .card{padding:24px 20px}
 
-  h1{
-    font-size:28px;
-  }
+  h1{font-size:28px}
 
   .ball{
-    width:130px;
-    height:130px;
+    width:140px;
+    height:140px;
   }
+
+  .roulette{font-size:32px}
+  .result{font-size:36px}
 
   th,td{
     padding:13px 5px;
@@ -248,150 +258,185 @@ th{
 <body>
 
 <header>
-  <div class="header-inner">
-    <img src="baseball.png" alt="野球ボール">
-    <b>虹学野球チャレンジ</b>
-  </div>
+<div class="header-inner">
+  <img src="baseball.png" alt="野球ボール">
+  <b>虹学野球チャレンジ</b>
+</div>
 </header>
 
 <main>
 
 <section id="gatePage">
-  <div class="card">
-    <h1>参加者限定</h1>
-    <p>参加者用パスワードを入力してください。</p>
+<div class="card">
+  <h1>参加者限定</h1>
+  <p>参加者用パスワードを入力してください。</p>
 
-    <input
-      id="passwordInput"
-      type="password"
-      placeholder="パスワード"
-    >
+  <input
+    id="passwordInput"
+    type="password"
+    placeholder="パスワード"
+  >
 
-    <button onclick="enterGate()">入場する</button>
+  <button onclick="enterGate()">入場する</button>
 
-    <div id="gateMessage" class="message"></div>
-  </div>
+  <div id="gateMessage" class="message"></div>
+</div>
 </section>
 
 <section id="registerPage" class="hidden">
-  <div class="card">
-    <h1>ユーザー登録</h1>
+<div class="card">
+  <h1>ユーザー登録</h1>
 
-    <p>
-      チャレンジで使用する名前を登録してください。
-    </p>
+  <p>
+    チャレンジで使用する名前を登録してください。
+  </p>
 
-    <input
-      id="nameInput"
-      maxlength="30"
-      placeholder="名前"
-    >
+  <input
+    id="nameInput"
+    maxlength="30"
+    placeholder="名前"
+  >
 
-    <button onclick="registerUser()">登録する</button>
+  <button onclick="registerUser()">登録する</button>
 
-    <div id="registerMessage" class="message"></div>
-  </div>
+  <div id="registerMessage" class="message"></div>
+</div>
 </section>
 
 <section id="appPage" class="hidden">
 
-  <div class="nav">
-    <button onclick="showPlay()">チャレンジ</button>
-    <button onclick="showRanking()">ランキング</button>
-    <button onclick="showProfile()">登録情報</button>
+<div class="nav">
+  <button onclick="showPlay()">チャレンジ</button>
+  <button onclick="showRanking()">ランキング</button>
+  <button onclick="showProfile()">登録情報</button>
+</div>
+
+<section id="playView">
+
+<div class="card status">
+
+  <img
+    id="baseball"
+    src="baseball.png"
+    class="ball"
+    alt="野球ボール"
+  >
+
+  <div id="playerName" class="name"></div>
+
+  <div id="playerScore" class="score">0pt</div>
+
+  <p id="playStatus">
+    本日のチャレンジ状況を確認しています。
+  </p>
+
+  <div id="rouletteText" class="roulette hidden"></div>
+
+  <button
+    id="playButton"
+    onclick="playGame()"
+  >
+    今日のチャレンジ
+  </button>
+
+  <div id="resultArea" class="hidden">
+    <div id="resultText" class="result"></div>
+    <div id="pointsText" class="points"></div>
   </div>
 
-  <section id="playView">
+  <div id="playMessage" class="message"></div>
 
-    <div class="card status">
+</div>
 
-      <img
-        src="baseball.png"
-        class="ball"
-        alt="野球ボール"
-      >
+</section>
 
-      <div id="playerName" class="name"></div>
+<section id="rankingView" class="hidden">
 
-      <div id="playerScore" class="score">0pt</div>
+<div class="card">
 
-      <p id="playStatus">
-        本日のチャレンジ状況を確認しています。
-      </p>
+  <h2>ランキング</h2>
 
-      <button
-        id="playButton"
-        onclick="playGame()"
-      >
-        今日のチャレンジ
-      </button>
+  <p>累計得点ランキング</p>
 
-      <div id="resultArea" class="hidden">
-        <div id="resultText" class="result"></div>
-        <div id="pointsText" class="points"></div>
-      </div>
+  <table>
+    <thead>
+      <tr>
+        <th>順位</th>
+        <th>名前</th>
+        <th>得点</th>
+      </tr>
+    </thead>
 
-      <div id="playMessage" class="message"></div>
+    <tbody id="rankingBody"></tbody>
+  </table>
 
-    </div>
+</div>
 
-  </section>
+</section>
 
-  <section id="rankingView" class="hidden">
+<section id="profileView" class="hidden">
 
-    <div class="card">
+<div class="card">
 
-      <h2>ランキング</h2>
+  <h2>登録情報</h2>
 
-      <p>
-        累計得点ランキング
-      </p>
+  <p>現在の登録名</p>
 
-      <table>
+  <div id="profileName" class="name"></div>
 
-        <thead>
-          <tr>
-            <th>順位</th>
-            <th>名前</th>
-            <th>得点</th>
-          </tr>
-        </thead>
+  <input
+    id="newNameInput"
+    maxlength="30"
+    placeholder="新しい名前"
+  >
 
-        <tbody id="rankingBody"></tbody>
+  <button onclick="changeName()">
+    名前を変更する
+  </button>
 
-      </table>
+  <div id="profileMessage" class="message"></div>
 
-    </div>
+  <div
+    class="admin-link"
+    onclick="toggleAdmin()"
+  >
+    管理者
+  </div>
 
-  </section>
+  <div id="adminBox" class="admin-box hidden">
 
-  <section id="profileView" class="hidden">
+    <h2>管理者メニュー</h2>
 
-    <div class="card">
+    <p class="warning">
+      全ユーザー・得点・履歴を削除します。
+      この操作は元に戻せません。
+    </p>
 
-      <h2>登録情報</h2>
+    <input
+      id="adminPassword"
+      type="password"
+      placeholder="管理者パスワード"
+    >
 
-      <p>
-        現在の登録名
-      </p>
+    <input
+      id="resetConfirm"
+      placeholder="RESET と入力"
+    >
 
-      <div id="profileName" class="name"></div>
+    <button
+      class="danger"
+      onclick="resetAllData()"
+    >
+      全データをリセット
+    </button>
 
-      <input
-        id="newNameInput"
-        maxlength="30"
-        placeholder="新しい名前"
-      >
+    <div id="adminMessage" class="message"></div>
 
-      <button onclick="changeName()">
-        名前を変更する
-      </button>
+  </div>
 
-      <div id="profileMessage" class="message"></div>
+</div>
 
-    </div>
-
-  </section>
+</section>
 
 </section>
 
@@ -399,13 +444,25 @@ th{
 
 <script>
 const API_URL =
-  'https://nijigaku-baseball-free-api.s-h-k-p-h-990.workers.dev';
+'https://nijigaku-baseball-free-api.s-h-k-p-h-990.workers.dev';
 
-const TOKEN_KEY = 'nijigaku_baseball_token';
+const TOKEN_KEY =
+'nijigaku_baseball_token';
 
-let token = localStorage.getItem(TOKEN_KEY) || '';
+let token =
+localStorage.getItem(TOKEN_KEY) || '';
+
 let gateToken = '';
 let currentUser = null;
+let rouletteRunning = false;
+
+const results = [
+  'アウト',
+  'ヒット',
+  '二塁打',
+  '三塁打',
+  'ホームラン'
+];
 
 function esc(value){
   return String(value ?? '')
@@ -416,28 +473,35 @@ function esc(value){
     .replaceAll("'",'&#039;');
 }
 
+function sleep(ms){
+  return new Promise(resolve =>
+    setTimeout(resolve,ms)
+  );
+}
+
 async function api(path,options={}){
+
   const headers = {
     'Content-Type':'application/json',
     ...(options.headers || {})
   };
 
   const authToken =
-    options.gateToken ||
-    token;
+    options.gateToken || token;
 
   if(authToken){
     headers.Authorization =
       `Bearer ${authToken}`;
   }
 
-  const response = await fetch(
-    API_URL + path,
-    {
-      ...options,
-      headers
-    }
-  );
+  const response =
+    await fetch(
+      API_URL + path,
+      {
+        ...options,
+        headers
+      }
+    );
 
   let data = {};
 
@@ -456,6 +520,7 @@ async function api(path,options={}){
 }
 
 function hidePages(){
+
   document
     .getElementById('gatePage')
     .classList.add('hidden');
@@ -484,15 +549,16 @@ async function enterGate(){
 
   try{
 
-    const data = await api(
-      '/auth',
-      {
-        method:'POST',
-        body:JSON.stringify({
-          password
-        })
-      }
-    );
+    const data =
+      await api(
+        '/auth',
+        {
+          method:'POST',
+          body:JSON.stringify({
+            password
+          })
+        }
+      );
 
     gateToken = data.token;
 
@@ -526,16 +592,17 @@ async function registerUser(){
 
   try{
 
-    const data = await api(
-      '/register',
-      {
-        method:'POST',
-        gateToken,
-        body:JSON.stringify({
-          name
-        })
-      }
-    );
+    const data =
+      await api(
+        '/register',
+        {
+          method:'POST',
+          gateToken,
+          body:JSON.stringify({
+            name
+          })
+        }
+      );
 
     token = data.token;
 
@@ -665,17 +732,64 @@ function renderUser(){
   }
 }
 
+async function rouletteAnimation(finalResult){
+
+  const ball =
+    document.getElementById('baseball');
+
+  const rouletteText =
+    document.getElementById('rouletteText');
+
+  rouletteText.classList.remove('hidden');
+  ball.classList.add('spinning');
+
+  let index = 0;
+
+  const speeds = [
+    70,70,70,70,70,70,
+    90,90,100,110,
+    130,150,180,
+    220,280,350
+  ];
+
+  for(const speed of speeds){
+
+    rouletteText.textContent =
+      results[index % results.length];
+
+    index++;
+
+    await sleep(speed);
+  }
+
+  rouletteText.textContent =
+    finalResult;
+
+  ball.classList.remove('spinning');
+
+  await sleep(700);
+
+  rouletteText.classList.add('hidden');
+}
+
 async function playGame(){
 
+  if(rouletteRunning) return;
+
+  rouletteRunning = true;
+
   const button =
-    document
-      .getElementById('playButton');
+    document.getElementById('playButton');
 
   const message =
-    document
-      .getElementById('playMessage');
+    document.getElementById('playMessage');
+
+  const resultArea =
+    document.getElementById('resultArea');
 
   message.textContent = '';
+
+  resultArea.classList.add('hidden');
 
   button.disabled = true;
 
@@ -692,6 +806,10 @@ async function playGame(){
         }
       );
 
+    await rouletteAnimation(
+      data.result
+    );
+
     currentUser =
       data.user;
 
@@ -703,6 +821,10 @@ async function playGame(){
       error.message;
 
     await loadMe();
+
+  }finally{
+
+    rouletteRunning = false;
 
   }
 }
@@ -729,7 +851,6 @@ function showPlay(){
   document
     .getElementById('playView')
     .classList.remove('hidden');
-
 }
 
 async function showRanking(){
@@ -741,8 +862,7 @@ async function showRanking(){
     .classList.remove('hidden');
 
   const body =
-    document
-      .getElementById('rankingBody');
+    document.getElementById('rankingBody');
 
   body.innerHTML =
     '<tr><td colspan="3">読み込み中...</td></tr>';
@@ -770,21 +890,21 @@ async function showRanking(){
             rankClass = 'rank rank3';
 
           return `
-            <tr>
-              <td>
-                <span class="${rankClass}">
-                  ${index + 1}位
-                </span>
-              </td>
+          <tr>
+            <td>
+              <span class="${rankClass}">
+                ${index + 1}位
+              </span>
+            </td>
 
-              <td>
-                ${esc(user.name)}
-              </td>
+            <td>
+              ${esc(user.name)}
+            </td>
 
-              <td>
-                ${user.score || 0}pt
-              </td>
-            </tr>
+            <td>
+              ${user.score || 0}pt
+            </td>
+          </tr>
           `;
 
         }
@@ -807,7 +927,6 @@ function showProfile(){
   document
     .getElementById('profileView')
     .classList.remove('hidden');
-
 }
 
 async function changeName(){
@@ -847,7 +966,7 @@ async function changeName(){
     renderUser();
 
     message.style.color =
-      '#237a3b';
+      'var(--green)';
 
     message.textContent =
       '名前を変更しました';
@@ -855,7 +974,82 @@ async function changeName(){
   }catch(error){
 
     message.style.color =
-      '#c0392b';
+      'var(--red)';
+
+    message.textContent =
+      error.message;
+
+  }
+}
+
+function toggleAdmin(){
+
+  document
+    .getElementById('adminBox')
+    .classList
+    .toggle('hidden');
+}
+
+async function resetAllData(){
+
+  const adminPassword =
+    document
+      .getElementById('adminPassword')
+      .value;
+
+  const confirm =
+    document
+      .getElementById('resetConfirm')
+      .value;
+
+  const message =
+    document
+      .getElementById('adminMessage');
+
+  message.textContent = '';
+
+  if(confirm !== 'RESET'){
+
+    message.textContent =
+      '確認欄に RESET と入力してください';
+
+    return;
+  }
+
+  const finalCheck =
+    window.confirm(
+      '本当に全ユーザー・得点・履歴を削除しますか？'
+    );
+
+  if(!finalCheck) return;
+
+  try{
+
+    await api(
+      '/admin/reset',
+      {
+        method:'POST',
+        body:JSON.stringify({
+          adminPassword,
+          confirm
+        })
+      }
+    );
+
+    localStorage.removeItem(
+      TOKEN_KEY
+    );
+
+    token = '';
+    currentUser = null;
+
+    alert(
+      '全データをリセットしました'
+    );
+
+    location.reload();
+
+  }catch(error){
 
     message.textContent =
       error.message;
