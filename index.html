@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="ja">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -91,6 +90,11 @@ nav button,
   color:#fff;
 }
 
+.danger{
+  background:#8f1f27;
+  color:#fff;
+}
+
 main{
   max-width:900px;
   margin:auto;
@@ -159,6 +163,41 @@ input{
 
 
 /* =========================
+   登録・ログイン
+========================= */
+
+.auth-switch{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:18px 0;
+}
+
+.auth-switch button{
+  border:0;
+  border-radius:8px;
+  padding:12px;
+  font-weight:800;
+  background:#e8edf3;
+  color:#18324b;
+  cursor:pointer;
+}
+
+.auth-switch button.active{
+  background:var(--red);
+  color:#fff;
+}
+
+.auth-box{
+  display:none;
+}
+
+.auth-box.active{
+  display:block;
+}
+
+
+/* =========================
    ルーレット
 ========================= */
 
@@ -202,10 +241,13 @@ input{
   position:absolute;
   left:50%;
   top:50%;
+
   color:#fff;
+
   font-weight:800;
   font-size:18px;
   line-height:1;
+
   white-space:nowrap;
 
   text-shadow:
@@ -218,7 +260,7 @@ input{
   transform:
     translate(-50%,-50%)
     rotate(36deg)
-    translateY(-135px)
+    translateY(-115px)
     rotate(90deg);
 }
 
@@ -226,7 +268,7 @@ input{
   transform:
     translate(-50%,-50%)
     rotate(108deg)
-    translateY(-135px)
+    translateY(-115px)
     rotate(90deg);
 }
 
@@ -234,7 +276,7 @@ input{
   transform:
     translate(-50%,-50%)
     rotate(180deg)
-    translateY(-135px)
+    translateY(-115px)
     rotate(90deg);
 }
 
@@ -242,7 +284,7 @@ input{
   transform:
     translate(-50%,-50%)
     rotate(252deg)
-    translateY(-135px)
+    translateY(-115px)
     rotate(90deg);
 }
 
@@ -250,12 +292,13 @@ input{
   transform:
     translate(-50%,-50%)
     rotate(324deg)
-    translateY(-135px)
+    translateY(-115px)
     rotate(90deg);
 }
 
 .wheel-ball{
   position:absolute;
+
   left:50%;
   top:50%;
 
@@ -268,7 +311,9 @@ input{
   object-fit:contain;
 
   background:#fff;
+
   border-radius:50%;
+
   padding:4px;
 
   z-index:3;
@@ -277,9 +322,16 @@ input{
 .pointer{
   font-size:38px;
   color:var(--red);
+
   margin-bottom:-13px;
+
   z-index:4;
 }
+
+
+/* =========================
+   結果
+========================= */
 
 .result{
   text-align:center;
@@ -322,6 +374,11 @@ th{
   background:#f5f7fa;
 }
 
+
+/* =========================
+   順位
+========================= */
+
 .rank{
   font-size:19px;
   font-weight:900;
@@ -349,11 +406,6 @@ th{
   margin-top:40px;
   border-top:1px solid var(--line);
   padding-top:20px;
-}
-
-.danger{
-  background:#8f1f27;
-  color:#fff;
 }
 
 
@@ -391,7 +443,7 @@ th{
     transform:
       translate(-50%,-50%)
       rotate(36deg)
-      translateY(-110px)
+      translateY(-92px)
       rotate(90deg);
   }
 
@@ -399,7 +451,7 @@ th{
     transform:
       translate(-50%,-50%)
       rotate(108deg)
-      translateY(-110px)
+      translateY(-92px)
       rotate(90deg);
   }
 
@@ -407,7 +459,7 @@ th{
     transform:
       translate(-50%,-50%)
       rotate(180deg)
-      translateY(-110px)
+      translateY(-92px)
       rotate(90deg);
   }
 
@@ -415,7 +467,7 @@ th{
     transform:
       translate(-50%,-50%)
       rotate(252deg)
-      translateY(-110px)
+      translateY(-92px)
       rotate(90deg);
   }
 
@@ -423,7 +475,7 @@ th{
     transform:
       translate(-50%,-50%)
       rotate(324deg)
-      translateY(-110px)
+      translateY(-92px)
       rotate(90deg);
   }
 
@@ -490,7 +542,9 @@ class="page active"
 
 <div class="card">
 
-<h1>参加者限定</h1>
+<h1>
+参加者限定
+</h1>
 
 <p class="small">
 参加者用パスワードを入力してください。
@@ -521,20 +575,46 @@ class="warn"
 
 
 <!-- =========================
-     登録
+     登録・ログイン
 ========================= -->
 
 <section
-id="register"
+id="auth"
 class="page"
 >
 
 <div class="card">
 
-<h1>ユーザー登録</h1>
+<h1>
+ユーザー
+</h1>
+
+
+<div class="auth-switch">
+
+<button
+id="showRegister"
+class="active"
+>
+はじめて遊ぶ
+</button>
+
+<button
+id="showLogin"
+>
+登録済みの方
+</button>
+
+</div>
+
+
+<div
+id="registerBox"
+class="auth-box active"
+>
 
 <p class="small">
-ランキングに表示する名前を登録してください。
+ランキングに表示する名前と、自分専用の4桁PINを登録してください。
 </p>
 
 <input
@@ -542,6 +622,14 @@ id="registerName"
 type="text"
 maxlength="30"
 placeholder="名前"
+>
+
+<input
+id="registerPin"
+type="password"
+inputmode="numeric"
+maxlength="4"
+placeholder="4桁PIN"
 >
 
 <button
@@ -558,6 +646,48 @@ class="warn"
 
 </div>
 
+
+<div
+id="loginBox"
+class="auth-box"
+>
+
+<p class="small">
+別のブラウザや端末でも、登録した名前と4桁PINで同じデータに戻れます。
+</p>
+
+<input
+id="loginName"
+type="text"
+maxlength="30"
+placeholder="登録した名前"
+>
+
+<input
+id="loginPin"
+type="password"
+inputmode="numeric"
+maxlength="4"
+placeholder="4桁PIN"
+>
+
+<button
+id="loginButton"
+class="btn secondary full"
+>
+ログインする
+</button>
+
+<p
+id="loginError"
+class="warn"
+></p>
+
+</div>
+
+
+</div>
+
 </section>
 
 
@@ -570,6 +700,7 @@ class="warn"
 id="play"
 class="page"
 >
+
 
 <div class="card center">
 
@@ -590,6 +721,7 @@ class="page"
 
 
 <div class="wheel-stage">
+
 
 <div
 id="wheel"
@@ -625,6 +757,7 @@ src="baseball.png"
 alt=""
 >
 
+
 </div>
 
 
@@ -636,6 +769,7 @@ style="margin-top:20px"
 ルーレットを回す
 </button>
 
+
 </div>
 
 
@@ -644,7 +778,9 @@ id="resultCard"
 class="card result hidden"
 >
 
-<h2>結果</h2>
+<h2>
+結果
+</h2>
 
 <strong id="resultName">
 —
@@ -658,6 +794,7 @@ class="score"
 <p id="totalScore"></p>
 
 </div>
+
 
 </section>
 
@@ -674,7 +811,9 @@ class="page"
 
 <div class="card">
 
-<h2>個人ランキング</h2>
+<h2>
+個人ランキング
+</h2>
 
 <div class="table-wrap">
 
@@ -683,9 +822,19 @@ class="page"
 <thead>
 
 <tr>
-<th>順位</th>
-<th>名前</th>
-<th>得点</th>
+
+<th>
+順位
+</th>
+
+<th>
+名前
+</th>
+
+<th>
+得点
+</th>
+
 </tr>
 
 </thead>
@@ -713,7 +862,9 @@ class="page"
 
 <div class="card">
 
-<h2>ユーザー情報</h2>
+<h2>
+ユーザー情報
+</h2>
 
 <p>
 現在の名前
@@ -725,22 +876,32 @@ class="page"
 
 <p>
 累計得点：
-<b id="profileScore">0pt</b>
+<b id="profileScore">
+0pt
+</b>
 </p>
 
 <p>
 挑戦回数：
-<b id="profilePlays">0回</b>
+<b id="profilePlays">
+0回
+</b>
 </p>
 
 <p>
 ホームラン：
-<b id="profileHomeRuns">0回</b>
+<b id="profileHomeRuns">
+0回
+</b>
 </p>
+
 
 <hr>
 
-<h3>名前を変更</h3>
+
+<h3>
+名前を変更
+</h3>
 
 <input
 id="newName"
@@ -759,7 +920,9 @@ class="btn secondary"
 
 <div class="admin-area">
 
-<h3>管理者用</h3>
+<h3>
+管理者用
+</h3>
 
 <p class="small">
 管理者のみ使用してください。
@@ -780,6 +943,7 @@ class="btn danger"
 
 </div>
 
+
 </div>
 
 </section>
@@ -790,6 +954,7 @@ class="btn danger"
 
 <script>
 
+
 /* =========================
    API
 ========================= */
@@ -799,7 +964,7 @@ const API_URL=
 
 
 /* =========================
-   保存
+   ユーザー
 ========================= */
 
 let token=
@@ -816,77 +981,116 @@ let me=null;
    DOM
 ========================= */
 
+const $=
+id=>document.getElementById(id);
+
+
 const nav=
-document.getElementById('nav');
+$('nav');
+
 
 const gatePassword=
-document.getElementById('gatePassword');
+$('gatePassword');
 
 const enterGate=
-document.getElementById('enterGate');
+$('enterGate');
 
 const gateError=
-document.getElementById('gateError');
+$('gateError');
+
+
+const showRegister=
+$('showRegister');
+
+const showLogin=
+$('showLogin');
+
+const registerBox=
+$('registerBox');
+
+const loginBox=
+$('loginBox');
+
 
 const registerName=
-document.getElementById('registerName');
+$('registerName');
+
+const registerPin=
+$('registerPin');
 
 const registerButton=
-document.getElementById('registerButton');
+$('registerButton');
 
 const registerError=
-document.getElementById('registerError');
+$('registerError');
+
+
+const loginName=
+$('loginName');
+
+const loginPin=
+$('loginPin');
+
+const loginButton=
+$('loginButton');
+
+const loginError=
+$('loginError');
+
 
 const welcomeName=
-document.getElementById('welcomeName');
+$('welcomeName');
 
 const playStatus=
-document.getElementById('playStatus');
+$('playStatus');
 
 const wheel=
-document.getElementById('wheel');
+$('wheel');
 
 const spin=
-document.getElementById('spin');
+$('spin');
 
 const resultCard=
-document.getElementById('resultCard');
+$('resultCard');
 
 const resultName=
-document.getElementById('resultName');
+$('resultName');
 
 const resultScore=
-document.getElementById('resultScore');
+$('resultScore');
 
 const totalScore=
-document.getElementById('totalScore');
+$('totalScore');
+
 
 const rankingRows=
-document.getElementById('rankingRows');
+$('rankingRows');
+
 
 const profileName=
-document.getElementById('profileName');
+$('profileName');
 
 const profileScore=
-document.getElementById('profileScore');
+$('profileScore');
 
 const profilePlays=
-document.getElementById('profilePlays');
+$('profilePlays');
 
 const profileHomeRuns=
-document.getElementById('profileHomeRuns');
+$('profileHomeRuns');
+
 
 const newName=
-document.getElementById('newName');
+$('newName');
 
 const changeName=
-document.getElementById('changeName');
+$('changeName');
 
 const adminPassword=
-document.getElementById('adminPassword');
+$('adminPassword');
 
 const resetAll=
-document.getElementById('resetAll');
+$('resetAll');
 
 
 /* =========================
@@ -899,9 +1103,14 @@ async function api(
 ){
 
   const headers={
-    'Content-Type':'application/json',
+
+    'Content-Type':
+    'application/json',
+
     ...(options.headers||{})
+
   };
+
 
   if(token){
 
@@ -910,17 +1119,24 @@ async function api(
 
   }
 
+
   const response=
   await fetch(
     API_URL+path,
     {
+
       ...options,
+
       headers,
+
       cache:'no-store'
+
     }
   );
 
+
   let data={};
+
 
   try{
 
@@ -929,14 +1145,19 @@ async function api(
 
   }catch{}
 
+
   if(!response.ok){
 
     throw new Error(
+
       data.error||
+
       '通信エラー'
+
     );
 
   }
+
 
   return data;
 
@@ -953,13 +1174,17 @@ function showPage(id){
   .querySelectorAll('.page')
   .forEach(page=>{
 
-    page.classList.remove('active');
+    page
+    .classList
+    .remove('active');
 
   });
 
+
   document
   .getElementById(id)
-  .classList.add('active');
+  .classList
+  .add('active');
 
 
   document
@@ -967,8 +1192,11 @@ function showPage(id){
   .forEach(tab=>{
 
     tab.classList.toggle(
+
       'active',
+
       tab.dataset.page===id
+
     );
 
   });
@@ -980,14 +1208,19 @@ document
 .querySelectorAll('.tab')
 .forEach(button=>{
 
-  button.onclick=async()=>{
+  button.onclick=
+  async()=>{
 
     const page=
     button.dataset.page;
 
+
     showPage(page);
 
-    if(page==='ranking'){
+
+    if(
+      page==='ranking'
+    ){
 
       await loadRanking();
 
@@ -999,12 +1232,66 @@ document
 
 
 /* =========================
+   登録画面切り替え
+========================= */
+
+function switchAuth(mode){
+
+  const register=
+  mode==='register';
+
+
+  showRegister
+  .classList
+  .toggle(
+    'active',
+    register
+  );
+
+
+  showLogin
+  .classList
+  .toggle(
+    'active',
+    !register
+  );
+
+
+  registerBox
+  .classList
+  .toggle(
+    'active',
+    register
+  );
+
+
+  loginBox
+  .classList
+  .toggle(
+    'active',
+    !register
+  );
+
+}
+
+
+showRegister.onclick=
+()=>switchAuth('register');
+
+
+showLogin.onclick=
+()=>switchAuth('login');
+
+
+/* =========================
    入場
 ========================= */
 
-enterGate.onclick=async()=>{
+enterGate.onclick=
+async()=>{
 
   gateError.textContent='';
+
 
   try{
 
@@ -1012,14 +1299,18 @@ enterGate.onclick=async()=>{
     await fetch(
       API_URL+'/auth',
       {
+
         method:'POST',
 
         headers:{
+
           'Content-Type':
           'application/json'
+
         },
 
-        body:JSON.stringify({
+        body:
+        JSON.stringify({
 
           password:
           gatePassword.value
@@ -1029,22 +1320,30 @@ enterGate.onclick=async()=>{
       }
     );
 
+
     const data=
     await response.json();
+
 
     if(!response.ok){
 
       throw new Error(
+
         data.error||
+
         '入場できません'
+
       );
 
     }
 
+
     gateToken=
     data.token;
 
-    showPage('register');
+
+    showPage('auth');
+
 
   }catch(error){
 
@@ -1057,15 +1356,22 @@ enterGate.onclick=async()=>{
 
 
 /* =========================
-   登録
+   新規登録
 ========================= */
 
-registerButton.onclick=async()=>{
+registerButton.onclick=
+async()=>{
 
   registerError.textContent='';
 
+
   const name=
   registerName.value.trim();
+
+
+  const pin=
+  registerPin.value.trim();
+
 
   if(!name){
 
@@ -1076,57 +1382,70 @@ registerButton.onclick=async()=>{
 
   }
 
+
+  if(
+    !/^\d{4}$/.test(pin)
+  ){
+
+    registerError.textContent=
+    'PINは数字4桁で入力してください';
+
+    return;
+
+  }
+
+
   try{
 
     const response=
     await fetch(
       API_URL+'/register',
       {
+
         method:'POST',
 
         headers:{
+
           'Content-Type':
           'application/json',
 
           'Authorization':
           'Bearer '+gateToken
+
         },
 
-        body:JSON.stringify({
-          name
+        body:
+        JSON.stringify({
+
+          name,
+
+          pin
+
         })
 
       }
     );
 
+
     const data=
     await response.json();
+
 
     if(!response.ok){
 
       throw new Error(
+
         data.error||
+
         '登録できません'
+
       );
 
     }
 
-    token=
-    data.token;
 
-    localStorage.setItem(
-      'nijigaku_free_token',
-      token
-    );
+    finishLogin(data);
 
-    me=
-    data.user;
-
-    nav.classList.add('show');
-
-    renderMe();
-
-    showPage('play');
 
   }catch(error){
 
@@ -1139,7 +1458,133 @@ registerButton.onclick=async()=>{
 
 
 /* =========================
-   自分
+   ログイン
+========================= */
+
+loginButton.onclick=
+async()=>{
+
+  loginError.textContent='';
+
+
+  const name=
+  loginName.value.trim();
+
+
+  const pin=
+  loginPin.value.trim();
+
+
+  if(
+    !name||
+    !/^\d{4}$/.test(pin)
+  ){
+
+    loginError.textContent=
+    '名前と4桁PINを入力してください';
+
+    return;
+
+  }
+
+
+  try{
+
+    const response=
+    await fetch(
+      API_URL+'/login',
+      {
+
+        method:'POST',
+
+        headers:{
+
+          'Content-Type':
+          'application/json'
+
+        },
+
+        body:
+        JSON.stringify({
+
+          name,
+
+          pin
+
+        })
+
+      }
+    );
+
+
+    const data=
+    await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+
+        data.error||
+
+        'ログインできません'
+
+      );
+
+    }
+
+
+    finishLogin(data);
+
+
+  }catch(error){
+
+    loginError.textContent=
+    error.message;
+
+  }
+
+};
+
+
+/* =========================
+   ログイン完了
+========================= */
+
+function finishLogin(data){
+
+  token=
+  data.token;
+
+
+  me=
+  data.user;
+
+
+  localStorage.setItem(
+
+    'nijigaku_free_token',
+
+    token
+
+  );
+
+
+  nav
+  .classList
+  .add('show');
+
+
+  renderMe();
+
+
+  showPage('play');
+
+}
+
+
+/* =========================
+   自分を取得
 ========================= */
 
 async function loadMe(){
@@ -1152,33 +1597,51 @@ async function loadMe(){
 
   }
 
+
   try{
 
     const data=
     await api('/me');
 
+
     me=
     data.user;
 
-    nav.classList.add('show');
+
+    nav
+    .classList
+    .add('show');
+
 
     renderMe();
 
+
     showPage('play');
+
 
     return true;
 
+
   }catch{
+
 
     token='';
 
+
     localStorage.removeItem(
+
       'nijigaku_free_token'
+
     );
 
-    nav.classList.remove('show');
+
+    nav
+    .classList
+    .remove('show');
+
 
     showPage('gate');
+
 
     return false;
 
@@ -1186,6 +1649,10 @@ async function loadMe(){
 
 }
 
+
+/* =========================
+   自分を描画
+========================= */
 
 function renderMe(){
 
@@ -1195,17 +1662,22 @@ function renderMe(){
 
   }
 
+
   welcomeName.textContent=
   me.name+' さん';
+
 
   profileName.textContent=
   me.name;
 
+
   profileScore.textContent=
   (me.score||0)+'pt';
 
+
   profilePlays.textContent=
   (me.plays||0)+'回';
+
 
   profileHomeRuns.textContent=
   (me.homeRuns||0)+'回';
@@ -1214,23 +1686,38 @@ function renderMe(){
   if(me.todayResult){
 
     playStatus.innerHTML=
+
     '<span class="warn">'+
+
     '本日は挑戦済みです'+
+
     '</span><br>'+
+
     '本日の結果：'+
+
     me.todayResult+
+
     ' ＋'+
+
     me.todayPoints+
+
     'pt';
+
 
     spin.disabled=true;
 
+
   }else{
 
+
     playStatus.innerHTML=
+
     '<span class="ok">'+
+
     '本日はまだ挑戦していません'+
+
     '</span>';
+
 
     spin.disabled=false;
 
@@ -1281,13 +1768,17 @@ let spinning=false;
 function outcome(name){
 
   return outcomes.find(
-    item=>item.name===name
+
+    item=>
+    item.name===name
+
   );
 
 }
 
 
-spin.onclick=async()=>{
+spin.onclick=
+async()=>{
 
   if(spinning){
 
@@ -1295,132 +1786,173 @@ spin.onclick=async()=>{
 
   }
 
+
   spinning=true;
+
 
   spin.disabled=true;
 
-  resultCard.classList.add('hidden');
+
+  resultCard
+  .classList
+  .add('hidden');
 
 
   try{
 
-    /*
-    APIが先に結果を決定
-    */
 
     const data=
     await api(
       '/play',
       {
+
         method:'POST',
+
         body:'{}'
+
       }
     );
 
 
     const selected=
-    outcome(data.result);
+    outcome(
+      data.result
+    );
 
 
     if(!selected){
 
       throw new Error(
+
         'ルーレット結果が不明です'
+
       );
 
     }
 
 
-    /*
-    マス中央から少しランダム化
-    */
-
     const safeOffset=
+
     (
       Math.random()*36
+
     )-18;
 
 
     const selectedAngle=
+
     selected.center+
+
     safeOffset;
 
 
-    /*
-    針は12時方向
-    */
-
     const targetRotation=
+
     (
       360-
+
       selectedAngle
+
     )%360;
 
 
     const normalizedCurrent=
+
     (
       (
+
         currentRotation%360
+
       )+
+
       360
+
     )%360;
 
 
     const delta=
+
     (
+
       targetRotation-
+
       normalizedCurrent+
+
       360
+
     )%360;
 
 
-    /*
-    5回転＋停止位置
-    */
-
     currentRotation+=
+
     1800+
+
     delta;
 
 
     wheel.style.transform=
+
     `rotate(${currentRotation}deg)`;
 
 
     setTimeout(()=>{
 
+
       me=
       data.user;
 
+
       resultName.textContent=
-      data.result+'！';
+
+      data.result+
+
+      '！';
+
 
       resultScore.textContent=
-      '＋'+data.points+' pt';
+
+      '＋'+
+
+      data.points+
+
+      ' pt';
+
 
       totalScore.textContent=
+
       '個人累計：'+
+
       me.score+
+
       'pt';
+
 
       resultCard
       .classList
       .remove('hidden');
 
+
       renderMe();
 
+
       spinning=false;
+
 
     },2200);
 
 
   }catch(error){
 
+
     alert(
+
       error.message
+
     );
 
+
     spinning=false;
+
 
     renderMe();
 
@@ -1441,11 +1973,13 @@ function rankClass(index){
 
   }
 
+
   if(index===1){
 
     return 'rank rank-2';
 
   }
+
 
   if(index===2){
 
@@ -1453,53 +1987,8 @@ function rankClass(index){
 
   }
 
+
   return 'rank';
-
-}
-
-
-async function loadRanking(){
-
-  rankingRows.innerHTML=
-  '<tr><td colspan="3">読み込み中...</td></tr>';
-
-  try{
-
-    const data=
-    await api('/ranking');
-
-    rankingRows.innerHTML=
-    data.ranking.map(
-      (user,index)=>
-      `<tr>
-
-      <td>
-      <span class="${rankClass(index)}">
-      ${index+1}位
-      </span>
-      </td>
-
-      <td>
-      ${escapeHtml(user.name)}
-      </td>
-
-      <td>
-      ${user.score||0}pt
-      </td>
-
-      </tr>`
-    ).join('');
-
-  }catch(error){
-
-    rankingRows.innerHTML=
-    `<tr>
-    <td colspan="3">
-    ${escapeHtml(error.message)}
-    </td>
-    </tr>`;
-
-  }
 
 }
 
@@ -1507,11 +1996,99 @@ async function loadRanking(){
 function escapeHtml(value){
 
   return String(value??'')
+
   .replaceAll('&','&amp;')
+
   .replaceAll('<','&lt;')
+
   .replaceAll('>','&gt;')
+
   .replaceAll('"','&quot;')
-  .replaceAll("'",'&#039;');
+
+  .replaceAll(
+    "'",
+    '&#039;'
+  );
+
+}
+
+
+async function loadRanking(){
+
+  rankingRows.innerHTML=
+
+  '<tr>'+
+
+  '<td colspan="3">'+
+
+  '読み込み中...'+
+
+  '</td>'+
+
+  '</tr>';
+
+
+  try{
+
+
+    const data=
+    await api('/ranking');
+
+
+    rankingRows.innerHTML=
+
+    data.ranking.map(
+
+      (
+        user,
+        index
+      )=>
+
+      `<tr>
+
+      <td>
+
+      <span class="${rankClass(index)}">
+
+      ${index+1}位
+
+      </span>
+
+      </td>
+
+      <td>
+
+      ${escapeHtml(user.name)}
+
+      </td>
+
+      <td>
+
+      ${user.score||0}pt
+
+      </td>
+
+      </tr>`
+
+    ).join('');
+
+
+  }catch(error){
+
+
+    rankingRows.innerHTML=
+
+    `<tr>
+
+    <td colspan="3">
+
+    ${escapeHtml(error.message)}
+
+    </td>
+
+    </tr>`;
+
+  }
 
 }
 
@@ -1520,48 +2097,70 @@ function escapeHtml(value){
    名前変更
 ========================= */
 
-changeName.onclick=async()=>{
+changeName.onclick=
+async()=>{
+
 
   const name=
   newName.value.trim();
 
+
   if(!name){
 
     return alert(
+
       '新しい名前を入力してください'
+
     );
 
   }
 
+
   try{
+
 
     const data=
     await api(
       '/name',
       {
+
         method:'POST',
 
-        body:JSON.stringify({
+        body:
+        JSON.stringify({
+
           name
+
         })
+
       }
     );
+
 
     me=
     data.user;
 
+
     newName.value='';
+
 
     renderMe();
 
+
     alert(
+
       '名前を変更しました'
+
     );
+
 
   }catch(error){
 
+
     alert(
+
       error.message
+
     );
 
   }
@@ -1573,82 +2172,126 @@ changeName.onclick=async()=>{
    管理者リセット
 ========================= */
 
-resetAll.onclick=async()=>{
+resetAll.onclick=
+async()=>{
+
 
   const password=
   adminPassword.value;
 
+
   if(!password){
 
     return alert(
+
       '管理者パスワードを入力してください'
+
     );
 
   }
 
+
   if(
+
     !confirm(
+
       '全ユーザー・得点・履歴を削除しますか？'
+
     )
+
   ){
 
     return;
 
   }
 
+
   const confirmText=
+
   prompt(
+
     '本当に削除する場合は RESET と入力してください'
+
   );
 
-  if(confirmText!=='RESET'){
+
+  if(
+
+    confirmText!=='RESET'
+
+  ){
 
     return alert(
+
       'リセットを中止しました'
+
     );
 
   }
 
+
   try{
+
 
     await api(
       '/admin/reset',
       {
+
         method:'POST',
 
-        body:JSON.stringify({
+        body:
+        JSON.stringify({
 
           adminPassword:
           password,
 
-          confirm:'RESET'
+          confirm:
+          'RESET'
 
         })
+
       }
     );
 
+
     localStorage.removeItem(
+
       'nijigaku_free_token'
+
     );
+
 
     token='';
 
+
     me=null;
 
-    nav.classList.remove('show');
+
+    nav
+    .classList
+    .remove('show');
+
 
     adminPassword.value='';
 
+
     alert(
+
       '全データをリセットしました'
+
     );
+
 
     showPage('gate');
 
+
   }catch(error){
 
+
     alert(
+
       error.message
+
     );
 
   }
@@ -1662,8 +2305,8 @@ resetAll.onclick=async()=>{
 
 loadMe();
 
+
 </script>
 
 </body>
-
 </html>
